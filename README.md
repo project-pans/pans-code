@@ -1,6 +1,5 @@
-# pans-code
-Central code repository for the Pantry App Notification System (P.A.N.S.)  
-PANS utilizes a Raspberry Pi running a Django webserver, weight sensors, and a barcode scanner to keep track of a user's pantry inventory.
+# Central code repository for PANS 
+The Pantry App Notification System (P.A.N.S.) utilizes a Raspberry Pi running a Django webserver, weight sensors, and a barcode scanner to keep track of a user's pantry inventory.
 ## MySQL Database
 ### Dependencies
 - ```sudo apt install mysql-server```
