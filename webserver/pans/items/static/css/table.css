@@ -1,0 +1,43 @@
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background-color: #252a34;
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	border:#fff 1px solid;
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+tbody > tr:hover  > td {
+    background-color: rgba(255,255,255,0.3);
+    padding: 15px;
+    color: #fff;
+}

@@ -1,0 +1,33 @@
+{% load static %}
+<html>
+
+<head>
+    <link href="{% static 'css/table.css' %}" rel="stylesheet" />
+</head>
+
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>UPC</th>
+                <th>Quantity</th>
+                <th>Weight</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in object_list %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.upc }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.weight }}</td>
+                <td>{{ item.date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</html>
