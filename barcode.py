@@ -14,15 +14,35 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-port = 17
-GPIO.setup(port, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+in_out_port = 17
+weight_port = 4
+GPIO.setup(in_out_port, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(weight_port, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+def main():
+    try:
+        while True:
+            upcnumber = barcode_reader()
+            print(upcnumber)
+            info = UPC_lookup(upcnumber)
+            print(info)
+            if GPIO.input(weight_port) == 1:
+                with open("/home/ubuntu/weight_data.txt", "a") as weight_file:
+                    weight_file.write(str(info))
+            else:
+                database(info)
+            print("done")
+    except KeyboardInterrupt:
+        logging.debug("Keyboard interrupt")
+    except Exception as err:
+        logging.error(err)
 
 
 def database(barcode_results):
     upc = barcode_results[0]
     name = barcode_results[1]
 
-    switch_value = GPIO.input(port)
+    switch_value = GPIO.input(in_out_port)
 
     sql = "SELECT quantity FROM items_item WHERE upc = %s"
     val = (upc,)
@@ -64,15 +84,4 @@ def UPC_lookup(upc):
 
 
 if __name__ == "__main__":
-    try:
-        while True:
-            upcnumber = barcode_reader()
-            print(upcnumber)
-            info = UPC_lookup(upcnumber)
-            print(info)
-            database(info)
-            print("done")
-    except KeyboardInterrupt:
-        logging.debug("Keyboard interrupt")
-    except Exception as err:
-        logging.error(err)
+    main()
