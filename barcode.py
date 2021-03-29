@@ -68,8 +68,7 @@ def database(barcode_results):
             else:
                 sql = "UPDATE items_item SET quantity = %s WHERE name = %s"
                 val = (quantity[0] - 1, name)
-
-        if quantity is not None:
+                
             mycursor.execute(sql, val)
             mydb.commit()
 
