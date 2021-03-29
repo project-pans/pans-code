@@ -6,8 +6,12 @@ from datetime import datetime
 from hx711 import HX711
 from barcode import UPC_lookup
 import time
+<<<<<<< HEAD
 import sys 
 import os
+=======
+import sys
+>>>>>>> b0b8a06e3f115930e430f477df2e0a116492278b
 
 class weight:
     def __init__(
@@ -77,6 +81,7 @@ def main():
     val = []
     while (True):
         try:
+<<<<<<< HEAD
             if(os.stat(filepath).st_size != 0):
                 with open(filepath, 'r+') as fp:
                     results = fp.read()
@@ -87,6 +92,18 @@ def main():
                     name = data[1]
                 if (len(upc) != 0):
                     print("HERE")
+=======
+            check_weights = False
+            with open(filepath, 'r+') as fp:
+                results = fp.read()
+                fp.truncate(0)
+                data = results.strip('()').split(',')
+                data=[x.strip().strip('\'') for x in data]
+                if (len(results) != 0):
+                    print("HERE")
+                    upc = data[0]
+                    name = data[1]
+>>>>>>> b0b8a06e3f115930e430f477df2e0a116492278b
                     while (True):
                         if (hx1.get_weight(5) - weight1.last_weight >= 100):
                             time.sleep(3)
@@ -155,27 +172,43 @@ def main():
             hx4.power_up()
             time.sleep(0.1)
 
+<<<<<<< HEAD
             #Barcode Idea: Read file that scanner writes to. If last line does not equal previous last line and switch is flipped to weights, new item has been placed. Poll weight values to see which weight 
+=======
+            #Barcode Idea: Read file that scanner writes to. If last line does not equal previous last line and switch is flipped to weights, new item has been placed. Poll weight values to see which weight
+>>>>>>> b0b8a06e3f115930e430f477df2e0a116492278b
             #item was placed and update initial weight and name accordingly.
             if weight1.curr_weight - weight1.last_weight >= 100 and weight1.initial_weight != 0:
                 time.sleep(3)
                 print(weight1.curr_weight)
                 sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
                 percent = weight1.curr_weight / weight1.initial_weight
+<<<<<<< HEAD
                 if percent > 1:
                     val = (100, 1)
                 else:
                     val = (percent * 100, 1)
+=======
+                val = (percent * 100, 1)
+>>>>>>> b0b8a06e3f115930e430f477df2e0a116492278b
                 mycursor.execute(sql, val)
             if weight1.last_weight - weight1.curr_weight >= 100:
                 time.sleep(3)
                 print(weight1.curr_weight)
                 sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+<<<<<<< HEAD
                 val = (0, 1)
                 mycursor.execute(sql, val)
 
             mydb.commit()
         
+=======
+                percent = 0
+                val = (percent * 100, 1)
+
+            mydb.commit()
+
+>>>>>>> b0b8a06e3f115930e430f477df2e0a116492278b
         except (KeyboardInterrupt, SystemExit):
             GPIO.cleanup()
             sys.exit()
