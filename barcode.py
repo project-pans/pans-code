@@ -14,7 +14,7 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-in_out_port = 17
+in_out_port = 16
 weight_port = 4
 GPIO.setup(in_out_port, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(weight_port, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -51,21 +51,27 @@ def database(barcode_results):
 
     if switch_value == 0:
         if quantity is None:
-            sql = "INSERT INTO items_item (name, upc, quantity, weight, date) VALUES (%s, %s, %s, %s, %s)"
-            val = (name, upc, 1, 0, datetime.now())
+            sql = "INSERT INTO items_item (name, upc, quantity, percent, date, weight_num) VALUES (%s, %s, %s, %s, %s, %s)"
+            val = (name, upc, 1, 0, datetime.now(), 0)
         else:
             sql = "UPDATE items_item SET quantity = %s WHERE name = %s"
             val = (quantity[0] + 1, name)
-    else:
-        if quantity[0] == 1:
-            sql = "DELETE FROM items_item WHERE name = %s"
-            val = (name,)
-        elif quantity is not None:
-            sql = "UPDATE items_item SET quantity = %s WHERE name = %s"
-            val = (quantity[0] - 1, name)
 
-    mycursor.execute(sql, val)
-    mydb.commit()
+        mycursor.execute(sql, val)
+        mydb.commit()
+
+    else:
+        if quantity is not None:
+            if quantity[0] == 1:
+                sql = "DELETE FROM items_item WHERE name = %s"
+                val = (name,)
+            else:
+                sql = "UPDATE items_item SET quantity = %s WHERE name = %s"
+                val = (quantity[0] - 1, name)
+
+        if quantity is not None:
+            mycursor.execute(sql, val)
+            mydb.commit()
 
 
 def UPC_lookup(upc):
