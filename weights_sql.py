@@ -6,7 +6,7 @@ from datetime import datetime
 from hx711 import HX711
 from barcode import UPC_lookup
 import time
-import sys 
+import sys
 import os
 
 class weight:
@@ -34,10 +34,10 @@ def main():
     referenceUnit3 = 1
     referenceUnit4 = 1
 
-    weight1 = weight(17, 27, "", "", 0, 0, -1)
-    weight2 = weight(13, 19, "", "", 0, 0, -1)
-    weight3 = weight(20, 21, "", "", 0, 0, -1)
-    weight4 = weight(20, 21, "", "", 0, 0, -1)
+    weight1 = weight(5, 6, "", "", 0, 0, -1)
+    weight2 = weight(9, 10, "", "", 0, 0, -1)
+    weight3 = weight(23, 24, "", "", 0, 0, -1)
+    weight4 = weight(17, 27, "", "", 0, 0, -1)
     # (DT, SCK)
     hx1 = HX711(weight1.dt, weight1.sck)
     hx2 = HX711(weight2.dt, weight2.sck)
@@ -136,6 +136,7 @@ def main():
                             time.sleep(0.1)
                             mycursor.execute(sql, val)
                             break
+
             weight1.last_weight = weight1.curr_weight
             weight2.last_weight = weight2.curr_weight
             weight3.last_weight = weight3.curr_weight
@@ -155,8 +156,6 @@ def main():
             hx4.power_up()
             time.sleep(0.1)
 
-            #Barcode Idea: Read file that scanner writes to. If last line does not equal previous last line and switch is flipped to weights, new item has been placed. Poll weight values to see which weight 
-            #item was placed and update initial weight and name accordingly.
             if weight1.curr_weight - weight1.last_weight >= 100 and weight1.initial_weight != 0:
                 time.sleep(3)
                 print(weight1.curr_weight)
@@ -167,6 +166,7 @@ def main():
                 else:
                     val = (percent * 100, 1)
                 mycursor.execute(sql, val)
+
             if weight1.last_weight - weight1.curr_weight >= 100:
                 time.sleep(3)
                 print(weight1.curr_weight)
@@ -174,9 +174,65 @@ def main():
                 val = (0, 1)
                 mycursor.execute(sql, val)
 
+            if weight2.curr_weight - weight2.last_weight >= 100 and weight2.initial_weight != 0:
+                time.sleep(3)
+                print(weight2.curr_weight)
+                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                percent = weight2.curr_weight / weight2.initial_weight
+                if percent > 1:
+                    val = (100, 2)
+                else:
+                    val = (percent * 100, 2)
+                mycursor.execute(sql, val)
+            if weight2.last_weight - weight2.curr_weight >= 100:
+                time.sleep(3)
+                print(weight2.curr_weight)
+                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                val = (0, 2)
+                mycursor.execute(sql, val)
+
+            if weight3.curr_weight - weight3.last_weight >= 100 and weight3.initial_weight != 0:
+                time.sleep(3)
+                print(weight3.curr_weight)
+                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                percent = weight3.curr_weight / weight3.initial_weight
+                if percent > 1:
+                    val = (100, 3)
+                else:
+                    val = (percent * 100, 3)
+                mycursor.execute(sql, val)
+
+            if weight3.last_weight - weight3.curr_weight >= 100:
+                time.sleep(3)
+                print(weight3.curr_weight)
+                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                val = (0, 3)
+                mycursor.execute(sql, val)
+
+            if weight4.curr_weight - weight4.last_weight >= 100 and weight4.initial_weight != 0:
+                time.sleep(3)
+                print(weight4.curr_weight)
+                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                percent = weight4.curr_weight / weight4.initial_weight
+                if percent > 1:
+                    val = (100, 4)
+                else:
+                    val = (percent * 100, 4)
+                mycursor.execute(sql, val)
+
+            if weight4.last_weight - weight4.curr_weight >= 100:
+                time.sleep(3)
+                print(weight4.curr_weight)
+                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                val = (0, 4)
+                mycursor.execute(sql, val)
+
             mydb.commit()
-        
+
         except (KeyboardInterrupt, SystemExit):
             GPIO.cleanup()
             sys.exit()
-main()
+
+
+if __name__ == "__main__":
+    main()
