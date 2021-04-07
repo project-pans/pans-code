@@ -74,7 +74,6 @@ def database(barcode_results):
 
 
 def UPC_lookup(upc):
-    # '''V3 API'''
 
     headers = {
         "cache-control": "no-cache",
@@ -84,9 +83,27 @@ def UPC_lookup(upc):
     print(url)
     resp = requests.get(url, headers=headers)
     data = json.loads(resp.text)
-    for item in data["items"]:
-        return upc, item["title"]
-
+    if data["code"] == "OK":
+        for item in data["items"]:
+            return upc, item["title"]
+    else:
+        url = "https://api.upcdatabase.org/product/" + upc + "?apikey=apikey"
+        print(url)
+        resp = requests.get(url, headers=headers)
+        data = json.loads(resp.text)
+        if data["success"] == True:
+            return upc, data["title"]
+        else:
+            print ("Item Not Found")
+            #url = "https://api.barcodespider.com/v1/lookup?token=apikey&upc=" + upc
+            #print(url)
+            #resp = requests.get(url, headers=headers)
+            #data = json.loads(resp.text)
+            #if data["code"] == 200:
+                #for item in data["item_attributes"]:
+                    #return upc, item["title"]
+            #else:
+                #print("item not found")
 
 if __name__ == "__main__":
     main()
