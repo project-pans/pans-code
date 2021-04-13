@@ -14,6 +14,7 @@
                 <th>Quantity</th>
                 <th>Weight</th>
                 <th>Date</th>
+                <th>Weight Sensor</th>
             </tr>
         </thead>
         <tbody>
@@ -22,8 +23,9 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.upc }}</td>
                 <td>{{ item.quantity }}</td>
-                <td>{{ item.weight }}</td>
+                <td>{{ item.percent }}</td>
                 <td>{{ item.date }}</td>
+                <td>{{ item.weight_num }}</td>
             </tr>
             {% endfor %}
         </tbody>
