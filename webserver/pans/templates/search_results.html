@@ -3,7 +3,19 @@
 
 <head>
     <link href="{% static 'css/table.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
 </head>
+
+<div class="button1o">
+    <form action="/">
+        <button class="button1i">Home</button>
+    </form>
+</div>
+<div class="button2o">
+    <form action="/admin">
+        <button class="button2i">Admin</button>
+    </form>
+</div>
 
 <div class="container">
     <table>
@@ -25,7 +37,7 @@
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.percent }}</td>
                 <td>{{ item.date }}</td>
-                <td>{{ item.weight_num }}</td>
+                <td>{{ item.weight }}</td>
             </tr>
             {% endfor %}
         </tbody>

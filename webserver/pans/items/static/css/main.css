@@ -1037,3 +1037,38 @@ body {
   }
 }
 
+.button1i {
+  white-space: nowrap;
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  background: #63c76a;
+  transition: all .2s ease-out, color .2s ease-out;
+  font-size: 18px;
+  margin: 8px 4px;
+}
+
+.button1o {
+  position: absolute;
+	top: 5;
+	right: 20;
+  width: 70px;
+}
+
+.button2i {
+  white-space: nowrap;
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  background: #63c76a;
+  transition: all .2s ease-out, color .2s ease-out;
+  font-size: 18px;
+  margin: 8px 4px;
+}
+
+.button2o {
+  position: absolute;
+	top: 5;
+	right: 90;
+  width: 70px;
+}

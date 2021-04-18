@@ -6,7 +6,7 @@ class Item(models.Model):
     quantity = models.IntegerField()
     percent = models.FloatField()
     date = models.DateTimeField()
-    weight_num = models.IntegerField()
+    weight = models.IntegerField()
 
     class Meta:
       verbose_name_plural = "items"

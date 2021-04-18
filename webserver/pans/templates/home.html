@@ -9,9 +9,52 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins"
         rel="stylesheet" />
     <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/table.css' %}" rel="stylesheet" />
 </head>
 
 <body>
+    <div class="button1o">
+        <form action="/">
+            <button class="button1i">Home</button>
+        </form>
+    </div>
+    <div class="button2o">
+        <form action="/admin">
+            <button class="button2i">Admin</button>
+        </form>
+    </div>
+
+    <div class="home">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="6" style="text-align:center;">Weight Sensor
+                        Values</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>UPC</th>
+                    <th>Quantity</th>
+                    <th>Weight</th>
+                    <th>Date</th>
+                    <th>Weight Sensor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in object_list %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.upc }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.percent }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.weight }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
     <div class="s003">
         <form action="{% url 'search_results' %}" method="get">
             <div class="inner-form">
