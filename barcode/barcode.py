@@ -51,7 +51,7 @@ def database(barcode_results):
 
     if switch_value == 0:
         if quantity is None:
-            sql = "INSERT INTO items_item (name, upc, quantity, percent, date, weight_num) VALUES (%s, %s, %s, %s, %s, %s)"
+            sql = "INSERT INTO items_item (name, upc, quantity, percent, date, weight) VALUES (%s, %s, %s, %s, %s, %s)"
             val = (name, upc, 1, 0, datetime.now(), 0)
         else:
             sql = "UPDATE items_item SET quantity = %s WHERE name = %s"
@@ -68,7 +68,7 @@ def database(barcode_results):
             else:
                 sql = "UPDATE items_item SET quantity = %s WHERE name = %s"
                 val = (quantity[0] - 1, name)
-                
+
             mycursor.execute(sql, val)
             mydb.commit()
 
@@ -95,15 +95,7 @@ def UPC_lookup(upc):
             return upc, data["title"]
         else:
             print ("Item Not Found")
-            #url = "https://api.barcodespider.com/v1/lookup?token=apikey&upc=" + upc
-            #print(url)
-            #resp = requests.get(url, headers=headers)
-            #data = json.loads(resp.text)
-            #if data["code"] == 200:
-                #for item in data["item_attributes"]:
-                    #return upc, item["title"]
-            #else:
-                #print("item not found")
+
 
 if __name__ == "__main__":
     main()

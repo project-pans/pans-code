@@ -65,7 +65,7 @@ def main():
     hx4.tare()
 
     now = datetime.now()
-    sql = "INSERT INTO items_item (name, upc, quantity, percent, date, weight_num) VALUES (%s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO items_item (name, upc, quantity, percent, date, weight) VALUES (%s, %s, %s, %s, %s, %s)"
     val = [
         ("", "", 1, 0, now, 1),
         ("", "", 1, 0, now, 2),
@@ -96,7 +96,7 @@ def main():
                             print("Initial Weight 1: ", weight1.initial_weight)
                             weight1.name = name
                             weight1.upc = upc
-                            sql = "UPDATE items_item SET percent = %s, name = %s, upc = %s, date = %s WHERE weight_num = %s"
+                            sql = "UPDATE items_item SET percent = %s, name = %s, upc = %s, date = %s WHERE weight = %s"
                             val = (100, weight1.name, weight1.upc, datetime.now(), 1)
                             hx1.power_down()
                             hx1.power_up()
@@ -111,7 +111,7 @@ def main():
                             print("Initial Weight 2: ", weight2.initial_weight)
                             weight2.name = name
                             weight2.upc = upc
-                            sql = "UPDATE items_item SET percent = %s, name = %s, upc = %s, date = %s WHERE weight_num = %s"
+                            sql = "UPDATE items_item SET percent = %s, name = %s, upc = %s, date = %s WHERE weight = %s"
                             val = (100, weight2.name, weight2.upc, datetime.now(), 2)
                             hx2.power_down()
                             hx2.power_up()
@@ -126,7 +126,7 @@ def main():
                             print("Initial Weight 3: ", weight3.initial_weight)
                             weight3.name = name
                             weight3.upc = upc
-                            sql = "UPDATE items_item SET percent = %s, name = %s, upc = %s, date = %s WHERE weight_num = %s"
+                            sql = "UPDATE items_item SET percent = %s, name = %s, upc = %s, date = %s WHERE weight = %s"
                             val = (100, weight3.name, weight3.upc, datetime.now(), 3)
                             hx3.power_down()
                             hx3.power_up()
@@ -141,7 +141,7 @@ def main():
                             print("Initial Weight 4: ", weight4.initial_weight)
                             weight4.name = name
                             weight4.upc = upc
-                            sql = "UPDATE items_item SET percent = %s, name = %s, upc = %s, date = %s WHERE weight_num = %s"
+                            sql = "UPDATE items_item SET percent = %s, name = %s, upc = %s, date = %s WHERE weight = %s"
                             val = (100, weight4.name, weight4.upc, datetime.now(), 4)
                             hx4.power_down()
                             hx4.power_up()
@@ -177,7 +177,7 @@ def main():
                 time.sleep(3)
                 print("Weight 1: ", weight1.curr_weight)
                 weight1.curr_weight = hx1.get_weight(5)
-                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                sql = "UPDATE items_item SET percent = %s WHERE weight = %s"
                 percent = weight1.curr_weight / weight1.initial_weight
                 if percent > 1:
                     val = (100, 1)
@@ -188,7 +188,7 @@ def main():
             if weight1.last_weight - weight1.curr_weight >= tolerance:
                 time.sleep(3)
                 print("Weight 1: ", weight1.curr_weight)
-                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                sql = "UPDATE items_item SET percent = %s WHERE weight = %s"
                 val = (0, 1)
                 mycursor.execute(sql, val)
 
@@ -196,7 +196,7 @@ def main():
                 time.sleep(3)
                 print("Weight 2: ", weight2.curr_weight)
                 weight2.curr_weight = hx2.get_weight(5)
-                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                sql = "UPDATE items_item SET percent = %s WHERE weight = %s"
                 percent = weight2.curr_weight / weight2.initial_weight
                 if percent > 1:
                     val = (100, 2)
@@ -206,7 +206,7 @@ def main():
             if weight2.last_weight - weight2.curr_weight >= tolerance:
                 time.sleep(3)
                 print("Weight 2: ", weight2.curr_weight)
-                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                sql = "UPDATE items_item SET percent = %s WHERE weight = %s"
                 val = (0, 2)
                 mycursor.execute(sql, val)
 
@@ -214,7 +214,7 @@ def main():
                 time.sleep(3)
                 weight3.curr_weight = hx3.get_weight(5)
                 print("Weight 3: ", weight3.curr_weight)
-                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                sql = "UPDATE items_item SET percent = %s WHERE weight = %s"
                 percent = weight3.curr_weight / weight3.initial_weight
                 if percent > 1:
                     val = (100, 3)
@@ -225,7 +225,7 @@ def main():
             if weight3.last_weight - weight3.curr_weight >= tolerance:
                 time.sleep(3)
                 print("Weight 3: ", weight3.curr_weight)
-                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                sql = "UPDATE items_item SET percent = %s WHERE weight = %s"
                 val = (0, 3)
                 mycursor.execute(sql, val)
 
@@ -233,7 +233,7 @@ def main():
                 time.sleep(3)
                 weight4.curr_weight = hx4.get_weight(5)
                 print("Weight 4: ", weight4.curr_weight)
-                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                sql = "UPDATE items_item SET percent = %s WHERE weight = %s"
                 percent = weight4.curr_weight / weight4.initial_weight
                 if percent > 1:
                     val = (100, 4)
@@ -244,7 +244,7 @@ def main():
             if weight4.last_weight - weight4.curr_weight >= tolerance:
                 time.sleep(3)
                 print("Weight 4: ", weight4.curr_weight)
-                sql = "UPDATE items_item SET percent = %s WHERE weight_num = %s"
+                sql = "UPDATE items_item SET percent = %s WHERE weight = %s"
                 val = (0, 4)
                 mycursor.execute(sql, val)
 
