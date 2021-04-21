@@ -64,6 +64,10 @@ def main():
     hx3.tare()
     hx4.tare()
 
+    sql = "DELETE FROM items_item WHERE weight != 0"
+    mycursor.execute(sql)
+    mydb.commit()
+
     now = datetime.now()
     sql = "INSERT INTO items_item (name, upc, quantity, percent, date, weight) VALUES (%s, %s, %s, %s, %s, %s)"
     val = [
