@@ -3,8 +3,14 @@ from django.views.generic import TemplateView, ListView
 from .models import Item
 
 
-class HomePageView(TemplateView):
+class HomePageView(ListView):
+    model = Item
     template_name = 'home.html'
+
+    def get_queryset(self):
+        query = 0
+        object_list = Item.objects.filter(~Q(weight__icontains=query))
+        return object_list
 
 class SearchResultsView(ListView):
     model = Item
